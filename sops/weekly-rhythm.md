@@ -6,9 +6,9 @@
 3. Paste any replies to the **sales-assistant** agent. Review and send.
 
 ## Weekly (2 hours, same day each week)
-1. **analyst**: update the scorecard and name the one number to fix.
+1. **analyst**: update the scorecard, refresh the dashboard, and name the one number to fix.
 2. **researcher**: new customer insights.
-3. **content-creator**: next week's content from one main idea.
+3. **content-creator**: next week's content from one main idea. **designer**: the visuals for it.
 4. **analyst**: client reports (if you have clients).
 5. **chief-of-staff**: weekly review, update `context/decisions-and-lessons.md`.
 

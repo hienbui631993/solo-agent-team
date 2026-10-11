@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Scorecard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root { --bg:#f7f6f3; --card:#ffffff; --text:#1f2328; --muted:#6b6f76; --line:#e4e2dd;
+          --c1:#2f6fde; --c2:#e07a2f; --good:#1f8a4c; --bad:#c4372f; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#16171a; --card:#1f2125; --text:#eceae6; --muted:#9a9ea6; --line:#2e3036; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:24px 16px; background:var(--bg); color:var(--text);
+         font:15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width:1100px; margin:0 auto; }
+  h1 { font-size:24px; margin:0 0 4px; }
+  .sub { color:var(--muted); margin:0 0 20px; }
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:16px; }
+  .kpi, .panel { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; }
+  .kpi .label { color:var(--muted); font-size:13px; }
+  .kpi .value { font-size:26px; font-weight:650; margin-top:2px; }
+  .kpi .delta { font-size:13px; }
+  .up { color:var(--good); } .down { color:var(--bad); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:12px; }
+  .panel h2 { font-size:15px; margin:0 0 12px; }
+  .fix { border-left:4px solid var(--c2); }
+  canvas { max-height:260px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Business Scorecard</h1>
+  <p class="sub" id="period"></p>
+  <section class="kpis" id="kpis"></section>
+  <section class="grid">
+    <div class="panel"><h2>Funnel this week</h2><canvas id="funnel"></canvas></div>
+    <div class="panel"><h2>Money in vs money out</h2><canvas id="money"></canvas></div>
+    <div class="panel"><h2>Leads and sales by week</h2><canvas id="trend"></canvas></div>
+    <div class="panel fix"><h2>The one thing to fix</h2><p id="fix"></p></div>
+  </section>
+</main>
+<script>
+// ==== DATA: the analyst replaces this block with numbers from context/scorecard.md ====
+const DATA = {
+  currency: "$",
+  weeks:     ["W1","W2","W3","W4"],
+  reached:   [400, 520, 610, 700],
+  leads:     [12, 15, 19, 24],
+  conversations: [5, 6, 9, 11],
+  sales:     [0, 1, 1, 2],
+  moneyIn:   [0, 300, 300, 600],
+  moneyOut:  [50, 50, 80, 80],
+  fix: "Example: only 2 of 11 conversations became sales. Next week, send a sample with every reply and track how many say yes."
+};
+// ==== END DATA ====
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const last = a => a[a.length-1], prev = a => a[a.length-2] ?? 0;
+const C1 = css('--c1'), C2 = css('--c2'), MUTED = css('--muted'), LINE = css('--line');
+Chart.defaults.color = MUTED; Chart.defaults.borderColor = LINE; Chart.defaults.font.family = 'system-ui, sans-serif';
+document.getElementById('period').textContent = `Latest week: ${last(DATA.weeks)} · ${DATA.weeks.length} weeks of data`;
+const money = v => DATA.currency + v.toLocaleString();
+const kpis = [
+  ["People reached", DATA.reached], ["Leads", DATA.leads], ["Sales", DATA.sales],
+  ["Money in", DATA.moneyIn, money], ["Profit", DATA.moneyIn.map((v,i)=>v-DATA.moneyOut[i]), money]
+];
+document.getElementById('kpis').innerHTML = kpis.map(([label, arr, fmt=(v=>v.toLocaleString())]) => {
+  const d = last(arr) - prev(arr);
+  const cls = d > 0 ? 'up' : d < 0 ? 'down' : '';
+  return `<div class="kpi"><div class="label">${label}</div><div class="value">${fmt(last(arr))}</div>
+          <div class="delta ${cls}">${d>0?'▲':d<0?'▼':'•'} ${fmt(Math.abs(d))} vs last week</div></div>`;
+}).join('');
+new Chart(document.getElementById('funnel'), { type:'bar', data:{ labels:['Reached','Leads','Conversations','Sales'],
+  datasets:[{ data:[last(DATA.reached), last(DATA.leads), last(DATA.conversations), last(DATA.sales)], backgroundColor:C1, borderRadius:6 }]},
+  options:{ indexAxis:'y', plugins:{ legend:{display:false} }, scales:{ x:{ type:'logarithmic' } } } });
+new Chart(document.getElementById('money'), { type:'bar', data:{ labels:DATA.weeks, datasets:[
+  { label:'Money in', data:DATA.moneyIn, backgroundColor:C1, borderRadius:6 },
+  { label:'Money out', data:DATA.moneyOut, backgroundColor:C2, borderRadius:6 } ]} });
+new Chart(document.getElementById('trend'), { type:'line', data:{ labels:DATA.weeks, datasets:[
+  { label:'Leads', data:DATA.leads, borderColor:C1, backgroundColor:C1, tension:.3 },
+  { label:'Sales', data:DATA.sales, borderColor:C2, backgroundColor:C2, tension:.3 } ]} });
+document.getElementById('fix').textContent = DATA.fix;
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Social creative</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Brand tokens: the designer replaces these with context/visual-style.md */
+  :root { --bg:#1f3b73; --accent:#f2b134; --text:#ffffff; --muted:#c9d3ea; --font:'Inter', system-ui, sans-serif; }
+  html, body { margin:0; }
+  .slide { width:1080px; height:1350px; background:var(--bg); color:var(--text); font-family:var(--font);
+           display:flex; flex-direction:column; justify-content:space-between; padding:110px 96px; box-sizing:border-box; }
+  .tag { font-weight:700; font-size:30px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); }
+  .headline { font-weight:800; font-size:92px; line-height:1.05; margin:0; }
+  .body { font-weight:500; font-size:38px; line-height:1.4; color:var(--muted); margin:36px 0 0; }
+  .footer { display:flex; justify-content:space-between; align-items:center; font-size:30px; font-weight:700; }
+  .cta { background:var(--accent); color:var(--bg); padding:20px 34px; border-radius:999px; }
+</style>
+</head>
+<body>
+  <div class="slide">
+    <div class="tag">Quick tip</div>
+    <div>
+      <h1 class="headline">Your best customers already told you what to post.</h1>
+      <p class="body">Read your last 20 reviews. Every question in them is a post idea.</p>
+    </div>
+    <div class="footer"><span>@yourbrand</span><span class="cta">Save this</span></div>
+  </div>
+</body>
+</html>
