@@ -13,9 +13,9 @@ description: Build an interactive HTML dashboard from the scorecard or any campa
 
 ## Steps
 1. Read the numbers. Don't guess missing ones; leave them out or ask.
-2. Copy the template to the output folder.
+2. Copy the template to the output folder. It is styled with the Linen design system; keep its style block unchanged.
 3. Replace only the `DATA` block with the real numbers (weeks, reached, leads, conversations, sales, moneyIn, moneyOut, currency) and the one thing to fix (from the `weekly-scorecard` skill).
-4. For other data (e.g. campaign results by channel), keep the same look: number cards on top, 2–4 simple charts, one "what to do" box. Use bar charts to compare, line charts for change over time. No pie charts with more than 3 slices.
+4. For other data (e.g. campaign results by channel), keep the same look: number cards on top, 2–4 simple charts, one "what to do" box. Use bar charts to compare, line charts for change over time. One series per chart in `var(--primary)`; two measures go in two charts, never one chart with two y-axes. No pie charts. Keep the "Show all numbers as a table" section.
 5. Render a PNG preview: `scripts/render.sh dashboard.html dashboard.png 1200 1000`. Check it.
 
 ## Output

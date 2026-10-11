@@ -30,6 +30,7 @@ sops/                weekly rhythm, approval rules
 inputs/              your raw material (reviews, lead lists, numbers)
 outputs/             everything the agents produce
 tasks/board.md       the task board
+design/              Linen design system (tokens + components)
 scripts/render.sh    HTML visual or dashboard -> PNG
 .claude/agents/      7 agents
 .claude/skills/      15 skills
@@ -50,8 +51,10 @@ docs/                the framework, research (incl. how others run agent teams),
    - `plan my day` or `check the task board`
 
 ## Visuals
-- **Social images and carousels:** the designer builds each slide as HTML in your brand style (`context/visual-style.md`), then turns it into a PNG with `scripts/render.sh`. Needs Node.js. It uses your Google Chrome if installed; otherwise run `npx playwright install chromium` once.
+- **Style:** every visual uses the **Linen design system** (warm clay colors, Google Sans Flex, light and dark mode). Tokens and components are in `design/`; the rules are in `context/visual-style.md`.
+- **Social images and carousels:** the designer builds each slide as HTML in the Linen style, then turns it into a PNG with `scripts/render.sh`. Needs Node.js. It uses your Google Chrome if installed; otherwise run `npx playwright install chromium` once.
 - **Dashboards:** the analyst fills `templates/dashboards/scorecard-dashboard.html` with your numbers. Open the HTML in a browser for an interactive dashboard, or render a PNG.
+- **Previews:** `docs/previews/` (social card, dashboard light and dark).
 - **Optional AI images:** connect an image-generation MCP server in Claude Code and the designer will use it for backgrounds and illustrations.
 
 **Tip:** start with just 3 agents (researcher, content-creator, sales-assistant). Add the others when you feel a real need. Expect about 2 weeks of correcting them before you fully trust their work.

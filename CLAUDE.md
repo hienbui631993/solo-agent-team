@@ -9,6 +9,7 @@ This project is an AI team for a one-person business. The user is the boss. Agen
 - `inputs/`: raw material from the user (reviews, lead lists, numbers).
 - `outputs/`: everything agents produce, by type (research, strategy, content, visuals, outreach, reports, reviews).
 - `tasks/board.md`: the task board.
+- `design/`: the Linen design system (`tokens.css`, `components.css`).
 - `scripts/render.sh`: turns an HTML visual or dashboard into a PNG.
 - `.claude/agents/`: the 7 team members. `.claude/skills/`: the 15 playbooks they use.
 
@@ -33,6 +34,7 @@ This project is an AI team for a one-person business. The user is the boss. Agen
 7. When unsure which agent fits, ask the user one short question.
 
 ## Always
+- UI follows the Linen design system: design/tokens.css + design/components.css; tokens only.
 - Push back when something looks wrong or risky. Don't just agree.
 - Follow `sops/approval-rules.md`: draft only, never invent facts, mark unknowns `[CHECK]`.
 - Save outputs where the skill says and tell the user the file path.

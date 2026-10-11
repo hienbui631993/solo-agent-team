@@ -3,46 +3,410 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Business Scorecard</title>
+<title>Business scorecard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;700&family=Google+Sans+Code:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-  :root { --bg:#f7f6f3; --card:#ffffff; --text:#1f2328; --muted:#6b6f76; --line:#e4e2dd;
-          --c1:#2f6fde; --c2:#e07a2f; --good:#1f8a4c; --bad:#c4372f; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg:#16171a; --card:#1f2125; --text:#eceae6; --muted:#9a9ea6; --line:#2e3036; }
+/* ===== Linen design system: tokens (do not edit; source: design/tokens.css) ===== */
+:root, [data-theme="light"] {
+  --primary: #8f4c36;
+  --on-primary: #ffffff;
+  --primary-container: #ffdbd0;
+  --on-primary-container: #723521;
+  --secondary: #77574d;
+  --on-secondary: #ffffff;
+  --secondary-container: #ffdbd0;
+  --on-secondary-container: #5d4037;
+  --tertiary: #6b5e2f;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #f4e2a7;
+  --on-tertiary-container: #52461a;
+  --error: #ba1a1a;
+  --on-error: #ffffff;
+  --error-container: #ffdad6;
+  --on-error-container: #93000a;
+  --surface: #fff8f6;
+  --surface-dim: #e8d6d1;
+  --surface-bright: #fff8f6;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #fff1ed;
+  --surface-container: #fceae5;
+  --surface-container-high: #f7e4df;
+  --surface-container-highest: #f1dfda;
+  --on-surface: #231917;
+  --on-surface-variant: #53433f;
+  --outline: #85736e;
+  --outline-variant: #d8c2bc;
+  --inverse-surface: #392e2b;
+  --inverse-on-surface: #ffede8;
+  --inverse-primary: #ffb59e;
+  --scrim: #000000;
+  --shadow: #000000;
+  --success: #496713;
+  --on-success: #ffffff;
+  --success-container: #c9ef8c;
+  --on-success-container: #121f00;
+  --link: var(--primary);
+}
+[data-theme="dark"] {
+  --primary: #ffb59e;
+  --on-primary: #561f0d;
+  --primary-container: #723521;
+  --on-primary-container: #ffdbd0;
+  --secondary: #e7bdb1;
+  --on-secondary: #442a22;
+  --secondary-container: #5d4037;
+  --on-secondary-container: #ffdbd0;
+  --tertiary: #d7c68d;
+  --on-tertiary: #3a3005;
+  --tertiary-container: #52461a;
+  --on-tertiary-container: #f4e2a7;
+  --error: #ffb4ab;
+  --on-error: #690005;
+  --error-container: #93000a;
+  --on-error-container: #ffdad6;
+  --surface: #1a110f;
+  --surface-dim: #1a110f;
+  --surface-bright: #423734;
+  --surface-container-lowest: #140c0a;
+  --surface-container-low: #231917;
+  --surface-container: #271d1b;
+  --surface-container-high: #322825;
+  --surface-container-highest: #3d322f;
+  --on-surface: #f1dfda;
+  --on-surface-variant: #d8c2bc;
+  --outline: #a08c87;
+  --outline-variant: #53433f;
+  --inverse-surface: #f1dfda;
+  --inverse-on-surface: #392e2b;
+  --inverse-primary: #8f4c36;
+  --scrim: #000000;
+  --shadow: #000000;
+  --success: #aed373;
+  --on-success: #223600;
+  --success-container: #334f00;
+  --on-success-container: #c9ef8c;
+  --link: var(--primary);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --primary: #ffb59e;
+    --on-primary: #561f0d;
+    --primary-container: #723521;
+    --on-primary-container: #ffdbd0;
+    --secondary: #e7bdb1;
+    --on-secondary: #442a22;
+    --secondary-container: #5d4037;
+    --on-secondary-container: #ffdbd0;
+    --tertiary: #d7c68d;
+    --on-tertiary: #3a3005;
+    --tertiary-container: #52461a;
+    --on-tertiary-container: #f4e2a7;
+    --error: #ffb4ab;
+    --on-error: #690005;
+    --error-container: #93000a;
+    --on-error-container: #ffdad6;
+    --surface: #1a110f;
+    --surface-dim: #1a110f;
+    --surface-bright: #423734;
+    --surface-container-lowest: #140c0a;
+    --surface-container-low: #231917;
+    --surface-container: #271d1b;
+    --surface-container-high: #322825;
+    --surface-container-highest: #3d322f;
+    --on-surface: #f1dfda;
+    --on-surface-variant: #d8c2bc;
+    --outline: #a08c87;
+    --outline-variant: #53433f;
+    --inverse-surface: #f1dfda;
+    --inverse-on-surface: #392e2b;
+    --inverse-primary: #8f4c36;
+    --scrim: #000000;
+    --shadow: #000000;
+    --success: #aed373;
+    --on-success: #223600;
+    --success-container: #334f00;
+    --on-success-container: #c9ef8c;
+    --link: var(--primary);
   }
-  * { box-sizing:border-box; }
-  body { margin:0; padding:24px 16px; background:var(--bg); color:var(--text);
-         font:15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
-  main { max-width:1100px; margin:0 auto; }
-  h1 { font-size:24px; margin:0 0 4px; }
-  .sub { color:var(--muted); margin:0 0 20px; }
-  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:16px; }
-  .kpi, .panel { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; }
-  .kpi .label { color:var(--muted); font-size:13px; }
-  .kpi .value { font-size:26px; font-weight:650; margin-top:2px; }
-  .kpi .delta { font-size:13px; }
-  .up { color:var(--good); } .down { color:var(--bad); }
-  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:12px; }
-  .panel h2 { font-size:15px; margin:0 0 12px; }
-  .fix { border-left:4px solid var(--c2); }
-  canvas { max-height:260px; }
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --shape-none: 0px;
+  --shape-extra-small: 4px;
+  --shape-small: 8px;
+  --shape-medium: 12px;
+  --shape-large: 16px;
+  --shape-large-increased: 20px;
+  --shape-extra-large: 28px;
+  --shape-extra-large-increased: 32px;
+  --shape-extra-extra-large: 48px;
+  --shape-full: 9999px;
+  --elevation-0: none;
+  --elevation-1: 0 1px 2px 0 rgba(0,0,0,0.3), 0 1px 3px 1px rgba(0,0,0,0.15);
+  --elevation-2: 0 1px 2px 0 rgba(0,0,0,0.3), 0 2px 6px 2px rgba(0,0,0,0.15);
+  --elevation-3: 0 1px 3px 0 rgba(0,0,0,0.3), 0 4px 8px 3px rgba(0,0,0,0.15);
+  --elevation-4: 0 2px 3px 0 rgba(0,0,0,0.3), 0 6px 10px 4px rgba(0,0,0,0.15);
+  --elevation-5: 0 4px 4px 0 rgba(0,0,0,0.3), 0 8px 12px 6px rgba(0,0,0,0.15);
+  --state-hover: 0.08;
+  --state-focus: 0.1;
+  --state-pressed: 0.1;
+  --state-dragged: 0.16;
+  --disabled-content: 0.38;
+  --disabled-container: 0.12;
+  --scrim-opacity: 0.32;
+  --font-brand: "Google Sans Flex", "Google Sans", Roboto, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-plain: "Google Sans Flex", "Google Sans", Roboto, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Google Sans Code", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+.display-large { font-family: var(--font-brand); font-size: 57px; line-height: 64px; font-weight: 400; letter-spacing: -0.25px; }
+.display-medium { font-family: var(--font-brand); font-size: 45px; line-height: 52px; font-weight: 400; letter-spacing: 0px; }
+.display-small { font-family: var(--font-brand); font-size: 36px; line-height: 44px; font-weight: 400; letter-spacing: 0px; }
+.headline-large { font-family: var(--font-brand); font-size: 32px; line-height: 40px; font-weight: 400; letter-spacing: 0px; }
+.headline-medium { font-family: var(--font-brand); font-size: 28px; line-height: 36px; font-weight: 400; letter-spacing: 0px; }
+.headline-small { font-family: var(--font-brand); font-size: 24px; line-height: 32px; font-weight: 400; letter-spacing: 0px; }
+.title-large { font-family: var(--font-plain); font-size: 22px; line-height: 28px; font-weight: 400; letter-spacing: 0px; }
+.title-medium { font-family: var(--font-plain); font-size: 16px; line-height: 24px; font-weight: 500; letter-spacing: 0.15px; }
+.title-small { font-family: var(--font-plain); font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: 0.1px; }
+.body-large { font-family: var(--font-plain); font-size: 16px; line-height: 24px; font-weight: 400; letter-spacing: 0.5px; }
+.body-medium { font-family: var(--font-plain); font-size: 14px; line-height: 20px; font-weight: 400; letter-spacing: 0.25px; }
+.body-small { font-family: var(--font-plain); font-size: 12px; line-height: 16px; font-weight: 400; letter-spacing: 0.4px; }
+.label-large { font-family: var(--font-plain); font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: 0.1px; }
+.label-medium { font-family: var(--font-plain); font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.5px; }
+.label-small { font-family: var(--font-plain); font-size: 11px; line-height: 16px; font-weight: 500; letter-spacing: 0.5px; }
+.display-large-emphasized { font-family: var(--font-brand); font-size: 57px; line-height: 64px; font-weight: 500; letter-spacing: -0.25px; }
+.display-medium-emphasized { font-family: var(--font-brand); font-size: 45px; line-height: 52px; font-weight: 500; letter-spacing: 0px; }
+.display-small-emphasized { font-family: var(--font-brand); font-size: 36px; line-height: 44px; font-weight: 500; letter-spacing: 0px; }
+.headline-large-emphasized { font-family: var(--font-brand); font-size: 32px; line-height: 40px; font-weight: 500; letter-spacing: 0px; }
+.headline-medium-emphasized { font-family: var(--font-brand); font-size: 28px; line-height: 36px; font-weight: 500; letter-spacing: 0px; }
+.headline-small-emphasized { font-family: var(--font-brand); font-size: 24px; line-height: 32px; font-weight: 500; letter-spacing: 0px; }
+.title-large-emphasized { font-family: var(--font-plain); font-size: 22px; line-height: 28px; font-weight: 500; letter-spacing: 0px; }
+.title-medium-emphasized { font-family: var(--font-plain); font-size: 16px; line-height: 24px; font-weight: 700; letter-spacing: 0.15px; }
+.title-small-emphasized { font-family: var(--font-plain); font-size: 14px; line-height: 20px; font-weight: 700; letter-spacing: 0.1px; }
+.body-large-emphasized { font-family: var(--font-plain); font-size: 16px; line-height: 24px; font-weight: 500; letter-spacing: 0.5px; }
+.body-medium-emphasized { font-family: var(--font-plain); font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: 0.25px; }
+.body-small-emphasized { font-family: var(--font-plain); font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.4px; }
+.label-large-emphasized { font-family: var(--font-plain); font-size: 14px; line-height: 20px; font-weight: 700; letter-spacing: 0.1px; }
+.label-medium-emphasized { font-family: var(--font-plain); font-size: 12px; line-height: 16px; font-weight: 700; letter-spacing: 0.5px; }
+.label-small-emphasized { font-family: var(--font-plain); font-size: 11px; line-height: 16px; font-weight: 700; letter-spacing: 0.5px; }
+.code { font-family: var(--font-mono); font-size: 14px; line-height: 20px; font-weight: 400; letter-spacing: 0px; }
+
+/* ===== Linen components (source: design/components.css) ===== */
+/* Linen components — framework-free CSS built on the Linen tokens (Material 3).
+   Load after tokens.css. Every class is prefixed `ln-`. Icons: Material Symbols Rounded. */
+
+.ln-icon { font-family: "Material Symbols Rounded"; font-weight: normal; font-style: normal; font-size: 24px; line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block; white-space: nowrap; direction: ltr; -webkit-font-smoothing: antialiased; font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+.ln-icon.is-filled { font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24; }
+
+/* ---------- shared: state layer + focus ---------- */
+.ln-state { position: relative; isolation: isolate; overflow: hidden; -webkit-tap-highlight-color: transparent; cursor: pointer; }
+.ln-state::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: currentColor; opacity: 0; transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1); pointer-events: none; z-index: -1; }
+.ln-state:hover::before { opacity: var(--state-hover); }
+.ln-state:focus-visible::before { opacity: var(--state-focus); }
+.ln-state:active::before { opacity: var(--state-pressed); }
+.ln-focus:focus-visible, .ln-state:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+
+/* ---------- Button ---------- */
+.ln-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); height: 40px; padding: 0 var(--space-6); border: 0; border-radius: var(--shape-full); font-family: var(--font-plain); font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: 0.1px; text-decoration: none; white-space: nowrap; background: transparent; color: var(--primary); transition: border-radius 200ms cubic-bezier(0.2, 0, 0, 1), box-shadow 200ms cubic-bezier(0.2, 0, 0, 1); }
+.ln-btn .ln-icon { font-size: 20px; margin-left: calc(-1 * var(--space-2)); }
+.ln-btn:active { border-radius: var(--shape-small); }
+.ln-btn--filled   { background: var(--primary); color: var(--on-primary); }
+.ln-btn--tonal    { background: var(--secondary-container); color: var(--on-secondary-container); }
+.ln-btn--outlined { box-shadow: inset 0 0 0 1px var(--outline-variant); color: var(--on-surface-variant); }
+.ln-btn--elevated { background: var(--surface-container-low); color: var(--primary); box-shadow: var(--elevation-1); }
+.ln-btn--elevated:hover { box-shadow: var(--elevation-2); }
+.ln-btn--text     { padding: 0 var(--space-3); }
+.ln-btn--filled:hover, .ln-btn--tonal:hover { box-shadow: var(--elevation-1); }
+.ln-btn--sm { height: 32px; padding: 0 var(--space-4); }
+.ln-btn--md { height: 56px; padding: 0 var(--space-6); font-size: 16px; line-height: 24px; letter-spacing: 0.15px; }
+.ln-btn--md:active { border-radius: var(--shape-medium); }
+.ln-btn--square { border-radius: var(--shape-medium); }
+.ln-btn:disabled, .ln-btn[aria-disabled="true"] { cursor: default; box-shadow: none; color: color-mix(in srgb, var(--on-surface) 38%, transparent); }
+.ln-btn--filled:disabled, .ln-btn--tonal:disabled, .ln-btn--elevated:disabled { background: color-mix(in srgb, var(--on-surface) 12%, transparent); }
+.ln-btn:disabled::before { display: none; }
+
+/* ---------- Icon button ---------- */
+.ln-icon-btn { display: inline-grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: var(--shape-full); background: transparent; color: var(--on-surface-variant); }
+.ln-icon-btn--filled   { background: var(--primary); color: var(--on-primary); }
+.ln-icon-btn--tonal    { background: var(--secondary-container); color: var(--on-secondary-container); }
+.ln-icon-btn--outlined { box-shadow: inset 0 0 0 1px var(--outline-variant); }
+.ln-icon-btn[aria-pressed="true"] { background: var(--primary); color: var(--on-primary); border-radius: var(--shape-medium); }
+.ln-icon-btn[aria-pressed="true"] .ln-icon { font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24; }
+
+/* ---------- FAB ---------- */
+.ln-fab { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-3); min-width: 56px; height: 56px; padding: 0 var(--space-4); border: 0; border-radius: var(--shape-large); background: var(--primary-container); color: var(--on-primary-container); box-shadow: var(--elevation-3); font-family: var(--font-plain); font-size: 16px; line-height: 24px; font-weight: 500; letter-spacing: 0.15px; transition: box-shadow 200ms cubic-bezier(0.2, 0, 0, 1), border-radius 200ms cubic-bezier(0.2, 0, 0, 1); }
+.ln-fab:hover { box-shadow: var(--elevation-4); }
+.ln-fab:active { border-radius: var(--shape-large-increased); }
+.ln-fab--extended { padding: 0 var(--space-4) 0 var(--space-4); }
+.ln-fab--large { min-width: 96px; height: 96px; border-radius: var(--shape-extra-large); }
+.ln-fab--large .ln-icon { font-size: 36px; }
+.ln-fab--primary { background: var(--primary); color: var(--on-primary); }
+.ln-fab--tertiary { background: var(--tertiary-container); color: var(--on-tertiary-container); }
+
+/* ---------- Text field ---------- */
+.ln-field { display: inline-flex; flex-direction: column; gap: var(--space-1); min-width: 220px; font-family: var(--font-plain); }
+.ln-field__box { position: relative; display: flex; align-items: center; gap: var(--space-3); height: 56px; padding: 0 var(--space-4); color: var(--on-surface-variant); }
+.ln-field__box .ln-icon { flex: none; }
+.ln-field__control { flex: 1; min-width: 0; height: 100%; padding: 24px 0 8px; border: 0; outline: 0; background: transparent; color: var(--on-surface); font: inherit; font-size: 16px; line-height: 24px; letter-spacing: 0.5px; caret-color: var(--primary); }
+.ln-field__label { position: absolute; left: var(--space-4); top: 8px; font-size: 12px; line-height: 16px; letter-spacing: 0.4px; color: var(--on-surface-variant); pointer-events: none; }
+.ln-field__box .ln-icon ~ .ln-field__label { left: 52px; }
+.ln-field__support { padding: 0 var(--space-4); font-size: 12px; line-height: 16px; letter-spacing: 0.4px; color: var(--on-surface-variant); }
+.ln-field--filled .ln-field__box { background: var(--surface-container-highest); border-radius: var(--shape-extra-small) var(--shape-extra-small) 0 0; box-shadow: inset 0 -1px 0 var(--on-surface-variant); }
+.ln-field--filled .ln-field__box:focus-within { box-shadow: inset 0 -3px 0 var(--primary); }
+.ln-field--outlined .ln-field__box { border-radius: var(--shape-extra-small); box-shadow: inset 0 0 0 1px var(--outline); }
+.ln-field--outlined .ln-field__control { padding: 16px 0; }
+.ln-field--outlined .ln-field__label { top: -8px; left: 12px; padding: 0 4px; background: var(--surface); }
+.ln-field--outlined .ln-field__box:focus-within { box-shadow: inset 0 0 0 2px var(--primary); }
+.ln-field__box:focus-within .ln-field__label { color: var(--primary); }
+.ln-field.is-error .ln-field__label, .ln-field.is-error .ln-field__support { color: var(--error); }
+.ln-field--filled.is-error .ln-field__box { box-shadow: inset 0 -2px 0 var(--error); }
+.ln-field--outlined.is-error .ln-field__box { box-shadow: inset 0 0 0 2px var(--error); }
+
+/* ---------- Card ---------- */
+.ln-card { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4); border-radius: var(--shape-medium); color: var(--on-surface); font-family: var(--font-plain); }
+.ln-card--elevated { background: var(--surface-container-low); box-shadow: var(--elevation-1); }
+.ln-card--filled   { background: var(--surface-container-highest); }
+.ln-card--outlined { background: var(--surface); box-shadow: inset 0 0 0 1px var(--outline-variant); }
+.ln-card--hero     { border-radius: var(--shape-extra-large-increased); padding: var(--space-6); background: var(--primary-container); color: var(--on-primary-container); }
+.ln-card__title { margin: 0; font-size: 16px; line-height: 24px; font-weight: 500; letter-spacing: 0.15px; }
+.ln-card__text  { margin: 0; font-size: 14px; line-height: 20px; letter-spacing: 0.25px; color: var(--on-surface-variant); }
+.ln-card--hero .ln-card__text { color: inherit; }
+.ln-card__actions { display: flex; gap: var(--space-2); justify-content: flex-end; margin-top: var(--space-2); }
+
+/* ---------- Chip ---------- */
+.ln-chip { display: inline-flex; align-items: center; gap: var(--space-2); height: 32px; padding: 0 var(--space-4); border: 0; border-radius: var(--shape-small); box-shadow: inset 0 0 0 1px var(--outline-variant); background: transparent; color: var(--on-surface-variant); font-family: var(--font-plain); font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: 0.1px; }
+.ln-chip .ln-icon { font-size: 18px; margin-left: calc(-1 * var(--space-2)); }
+.ln-chip--assist .ln-icon { color: var(--primary); }
+.ln-chip[aria-pressed="true"], .ln-chip[aria-selected="true"] { box-shadow: none; background: var(--secondary-container); color: var(--on-secondary-container); }
+.ln-chip-set { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+/* ---------- Switch ---------- */
+.ln-switch { appearance: none; position: relative; width: 52px; height: 32px; margin: 0; border-radius: var(--shape-full); background: var(--surface-container-highest); box-shadow: inset 0 0 0 2px var(--outline); cursor: pointer; transition: background 200ms cubic-bezier(0.2, 0, 0, 1); }
+.ln-switch::after { content: ""; position: absolute; top: 8px; left: 8px; width: 16px; height: 16px; border-radius: var(--shape-full); background: var(--outline); transition: all 250ms cubic-bezier(0.2, 0, 0, 1); }
+.ln-switch:checked { background: var(--primary); box-shadow: none; }
+.ln-switch:checked::after { top: 4px; left: 24px; width: 24px; height: 24px; background: var(--on-primary); }
+.ln-switch:active::after { top: 2px; width: 28px; height: 28px; left: 2px; }
+.ln-switch:checked:active::after { left: 22px; }
+.ln-switch:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+.ln-switch:disabled { opacity: 0.38; cursor: default; }
+
+/* ---------- Navigation bar ---------- */
+.ln-navbar { display: flex; justify-content: space-around; height: 80px; padding: 12px var(--space-2) 16px; background: var(--surface-container); font-family: var(--font-plain); }
+.ln-navbar__item { display: flex; flex-direction: column; align-items: center; gap: var(--space-1); flex: 1; min-width: 48px; border: 0; padding: 0; background: none; color: var(--on-surface-variant); font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.5px; cursor: pointer; }
+.ln-navbar__pill { display: grid; place-items: center; width: 64px; height: 32px; border-radius: var(--shape-full); }
+.ln-navbar__item[aria-current="page"] { color: var(--on-surface); }
+.ln-navbar__item[aria-current="page"] .ln-navbar__pill { background: var(--secondary-container); color: var(--on-secondary-container); }
+.ln-navbar__item[aria-current="page"] .ln-icon { font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24; }
+
+/* ---------- Dialog ---------- */
+.ln-dialog { display: flex; flex-direction: column; gap: var(--space-4); width: min(560px, 100%); min-width: 280px; padding: var(--space-6); border-radius: var(--shape-extra-large); background: var(--surface-container-high); color: var(--on-surface); box-shadow: var(--elevation-3); font-family: var(--font-plain); box-sizing: border-box; }
+.ln-dialog__icon { align-self: center; color: var(--secondary); }
+.ln-dialog__headline { margin: 0; font-family: var(--font-brand); font-size: 24px; line-height: 32px; font-weight: 400; }
+.ln-dialog--centered .ln-dialog__headline { text-align: center; }
+.ln-dialog__body { margin: 0; font-size: 14px; line-height: 20px; letter-spacing: 0.25px; color: var(--on-surface-variant); }
+.ln-dialog__actions { display: flex; justify-content: flex-end; gap: var(--space-2); margin-top: var(--space-2); }
+.ln-scrim { position: fixed; inset: 0; background: var(--scrim); opacity: var(--scrim-opacity); }
+
+/* ---------- Snackbar ---------- */
+.ln-snackbar { display: flex; align-items: center; gap: var(--space-2); min-height: 48px; max-width: 560px; padding: 0 var(--space-2) 0 var(--space-4); border-radius: var(--shape-extra-small); background: var(--inverse-surface); color: var(--inverse-on-surface); box-shadow: var(--elevation-3); font-family: var(--font-plain); font-size: 14px; line-height: 20px; letter-spacing: 0.25px; box-sizing: border-box; }
+.ln-snackbar__text { flex: 1; padding: 14px 0; }
+.ln-snackbar .ln-btn { color: var(--inverse-primary); padding: 0 var(--space-3); }
+.ln-snackbar .ln-icon-btn { color: var(--inverse-on-surface); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ln-btn, .ln-fab, .ln-switch, .ln-switch::after, .ln-state::before { transition: none; }
+}
+
+/* ===== Page layout ===== */
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--surface); color: var(--on-surface); font-family: var(--font-plain); }
+main { max-width: 1120px; margin: 0 auto; padding: var(--space-6) var(--space-4) var(--space-12); }
+@media (min-width: 600px) { main { padding: var(--space-8) var(--space-6) var(--space-16); } }
+header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-6); }
+h1, h2, p { margin: 0; }
+.sub { color: var(--on-surface-variant); margin-top: var(--space-1); }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); gap: var(--space-3); margin-bottom: var(--space-3); }
+.kpi { background: var(--surface-container-low); border-radius: var(--shape-medium); padding: var(--space-4); }
+.kpi .label-large { color: var(--on-surface-variant); }
+.kpi .value { margin-top: var(--space-1); }
+.delta { display: inline-flex; align-items: center; gap: var(--space-1); margin-top: var(--space-1); color: var(--on-surface-variant); }
+.delta .ln-icon { font-size: 18px; }
+.delta.up { color: var(--success); } .delta.down { color: var(--error); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: var(--space-3); }
+.panel { background: var(--surface-container-low); border-radius: var(--shape-medium); padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); }
+.panel .body-medium { color: var(--on-surface-variant); }
+.chart { position: relative; height: 220px; }
+.funnel { display: flex; flex-direction: column; gap: var(--space-3); }
+.step { display: grid; grid-template-columns: 120px 1fr auto; align-items: center; gap: var(--space-3); }
+.step .bar { height: 12px; border-radius: var(--shape-full); background: var(--surface-container-highest); overflow: hidden; }
+.step .bar span { display: block; height: 100%; min-width: 4px; border-radius: var(--shape-full); background: var(--primary); }
+.step .rate { color: var(--on-surface-variant); min-width: 64px; text-align: right; }
+.hero { grid-column: 1 / -1; }
+.hero .ln-card__title { display: flex; align-items: center; gap: var(--space-2); }
+details { margin-top: var(--space-6); }
+summary { cursor: pointer; color: var(--primary); }
+table { width: 100%; border-collapse: collapse; margin-top: var(--space-3); }
+th, td { text-align: right; padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--outline-variant); }
+th:first-child, td:first-child { text-align: left; }
+th { color: var(--on-surface-variant); font-weight: 500; }
 </style>
 </head>
 <body>
 <main>
-  <h1>Business Scorecard</h1>
-  <p class="sub" id="period"></p>
-  <section class="kpis" id="kpis"></section>
+  <header>
+    <div>
+      <h1 class="headline-large">Business scorecard</h1>
+      <p class="body-large sub" id="period"></p>
+    </div>
+  </header>
+
+  <section class="kpis" id="kpis" aria-label="Key numbers this week"></section>
+
   <section class="grid">
-    <div class="panel"><h2>Funnel this week</h2><canvas id="funnel"></canvas></div>
-    <div class="panel"><h2>Money in vs money out</h2><canvas id="money"></canvas></div>
-    <div class="panel"><h2>Leads and sales by week</h2><canvas id="trend"></canvas></div>
-    <div class="panel fix"><h2>The one thing to fix</h2><p id="fix"></p></div>
+    <div class="ln-card ln-card--hero hero">
+      <h2 class="ln-card__title"><span class="ln-icon" aria-hidden="true">flag</span>The one thing to fix</h2>
+      <p class="ln-card__text body-large" id="fix"></p>
+    </div>
+    <div class="panel">
+      <h2 class="title-medium">Funnel this week</h2>
+      <p class="body-medium">How many people moved to the next step</p>
+      <div class="funnel" id="funnel"></div>
+    </div>
+    <div class="panel">
+      <h2 class="title-medium">Profit by week</h2>
+      <p class="body-medium">Money in minus money out</p>
+      <div class="chart"><canvas id="profit" aria-label="Profit by week bar chart" role="img"></canvas></div>
+    </div>
+    <div class="panel">
+      <h2 class="title-medium">Leads by week</h2>
+      <p class="body-medium">New people who showed interest</p>
+      <div class="chart"><canvas id="leads" aria-label="Leads by week line chart" role="img"></canvas></div>
+    </div>
+    <div class="panel">
+      <h2 class="title-medium">Sales by week</h2>
+      <p class="body-medium">New paying customers</p>
+      <div class="chart"><canvas id="sales" aria-label="Sales by week bar chart" role="img"></canvas></div>
+    </div>
   </section>
+
+  <details>
+    <summary class="label-large">Show all numbers as a table</summary>
+    <table class="body-medium" id="table"></table>
+  </details>
 </main>
 <script>
-// ==== DATA: the analyst replaces this block with numbers from context/scorecard.md ====
+// ==== DATA: the analyst replaces only this block with numbers from context/scorecard.md ====
 const DATA = {
   currency: "$",
   weeks:     ["W1","W2","W3","W4"],
@@ -55,32 +419,67 @@ const DATA = {
   fix: "Example: only 2 of 11 conversations became sales. Next week, send a sample with every reply and track how many say yes."
 };
 // ==== END DATA ====
-const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-const last = a => a[a.length-1], prev = a => a[a.length-2] ?? 0;
-const C1 = css('--c1'), C2 = css('--c2'), MUTED = css('--muted'), LINE = css('--line');
-Chart.defaults.color = MUTED; Chart.defaults.borderColor = LINE; Chart.defaults.font.family = 'system-ui, sans-serif';
-document.getElementById('period').textContent = `Latest week: ${last(DATA.weeks)} · ${DATA.weeks.length} weeks of data`;
-const money = v => DATA.currency + v.toLocaleString();
-const kpis = [
-  ["People reached", DATA.reached], ["Leads", DATA.leads], ["Sales", DATA.sales],
-  ["Money in", DATA.moneyIn, money], ["Profit", DATA.moneyIn.map((v,i)=>v-DATA.moneyOut[i]), money]
-];
-document.getElementById('kpis').innerHTML = kpis.map(([label, arr, fmt=(v=>v.toLocaleString())]) => {
+
+const token = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const last = a => a[a.length - 1], prev = a => a.length > 1 ? a[a.length - 2] : 0;
+const num = v => v.toLocaleString();
+const money = v => (v < 0 ? "-" : "") + DATA.currency + Math.abs(v).toLocaleString();
+const profit = DATA.moneyIn.map((v, i) => v - DATA.moneyOut[i]);
+
+document.getElementById("period").textContent = `Latest week: ${last(DATA.weeks)} · ${DATA.weeks.length} weeks of data`;
+document.getElementById("fix").textContent = DATA.fix;
+
+// Key numbers
+const kpis = [["People reached", DATA.reached, num], ["Leads", DATA.leads, num], ["Sales", DATA.sales, num],
+              ["Money in", DATA.moneyIn, money], ["Profit", profit, money]];
+document.getElementById("kpis").innerHTML = kpis.map(([label, arr, fmt]) => {
   const d = last(arr) - prev(arr);
-  const cls = d > 0 ? 'up' : d < 0 ? 'down' : '';
-  return `<div class="kpi"><div class="label">${label}</div><div class="value">${fmt(last(arr))}</div>
-          <div class="delta ${cls}">${d>0?'▲':d<0?'▼':'•'} ${fmt(Math.abs(d))} vs last week</div></div>`;
-}).join('');
-new Chart(document.getElementById('funnel'), { type:'bar', data:{ labels:['Reached','Leads','Conversations','Sales'],
-  datasets:[{ data:[last(DATA.reached), last(DATA.leads), last(DATA.conversations), last(DATA.sales)], backgroundColor:C1, borderRadius:6 }]},
-  options:{ indexAxis:'y', plugins:{ legend:{display:false} }, scales:{ x:{ type:'logarithmic' } } } });
-new Chart(document.getElementById('money'), { type:'bar', data:{ labels:DATA.weeks, datasets:[
-  { label:'Money in', data:DATA.moneyIn, backgroundColor:C1, borderRadius:6 },
-  { label:'Money out', data:DATA.moneyOut, backgroundColor:C2, borderRadius:6 } ]} });
-new Chart(document.getElementById('trend'), { type:'line', data:{ labels:DATA.weeks, datasets:[
-  { label:'Leads', data:DATA.leads, borderColor:C1, backgroundColor:C1, tension:.3 },
-  { label:'Sales', data:DATA.sales, borderColor:C2, backgroundColor:C2, tension:.3 } ]} });
-document.getElementById('fix').textContent = DATA.fix;
+  const cls = d > 0 ? "up" : d < 0 ? "down" : "";
+  const icon = d > 0 ? "trending_up" : d < 0 ? "trending_down" : "trending_flat";
+  return `<div class="kpi"><div class="label-large">${label}</div>
+    <div class="value headline-medium">${fmt(last(arr))}</div>
+    <div class="delta body-small ${cls}"><span class="ln-icon" aria-hidden="true">${icon}</span>${fmt(Math.abs(d))} vs last week</div></div>`;
+}).join("");
+
+// Funnel (a list, not a chart: the steps differ by 100x, so bars alone would hide the small ones)
+const steps = [["Reached", last(DATA.reached)], ["Leads", last(DATA.leads)], ["Conversations", last(DATA.conversations)], ["Sales", last(DATA.sales)]];
+document.getElementById("funnel").innerHTML = steps.map(([name, v], i) => {
+  const rate = i === 0 ? "" : (steps[i-1][1] ? Math.round(v / steps[i-1][1] * 100) + "%" : "–");
+  const w = steps[0][1] ? Math.max(1, v / steps[0][1] * 100) : 0;
+  return `<div class="step"><span class="label-large">${name} · ${num(v)}</span>
+    <div class="bar"><span style="width:${w}%"></span></div><span class="rate body-medium">${rate ? rate + " of previous" : ""}</span></div>`;
+}).join("");
+
+// Table view
+document.getElementById("table").innerHTML =
+  `<tr><th>Week</th><th>Reached</th><th>Leads</th><th>Conversations</th><th>Sales</th><th>Money in</th><th>Money out</th><th>Profit</th></tr>` +
+  DATA.weeks.map((w, i) => `<tr><td>${w}</td><td>${num(DATA.reached[i])}</td><td>${num(DATA.leads[i])}</td><td>${num(DATA.conversations[i])}</td>
+    <td>${num(DATA.sales[i])}</td><td>${money(DATA.moneyIn[i])}</td><td>${money(DATA.moneyOut[i])}</td><td>${money(profit[i])}</td></tr>`).join("");
+
+// Charts: one series each, in the Linen primary role. Single series, so the title names it (no legend).
+if (window.Chart) {
+  const PRIMARY = token("--primary"), INK = token("--on-surface-variant"), GRID = token("--outline-variant");
+  Chart.defaults.font.family = token("--font-plain");
+  Chart.defaults.color = INK;
+  const base = (fmt) => ({
+    maintainAspectRatio: false, interaction: { mode: "index", intersect: false },
+    plugins: { legend: { display: false },
+      tooltip: { backgroundColor: token("--inverse-surface"), titleColor: token("--inverse-on-surface"),
+                 bodyColor: token("--inverse-on-surface"), cornerRadius: 4, padding: 12, displayColors: false,
+                 callbacks: { label: c => fmt(c.parsed.y) } } },
+    scales: { x: { grid: { display: false }, border: { color: GRID } },
+              y: { beginAtZero: true, grid: { color: GRID }, border: { display: false }, ticks: { callback: fmt, maxTicksLimit: 5, precision: 0 } } }
+  });
+  const bar = (id, data, fmt) => new Chart(document.getElementById(id), { type: "bar",
+    data: { labels: DATA.weeks, datasets: [{ data, backgroundColor: PRIMARY, borderRadius: 4, borderSkipped: "start", maxBarThickness: 32 }] },
+    options: base(fmt) });
+  bar("profit", profit, money);
+  bar("sales", DATA.sales, num);
+  new Chart(document.getElementById("leads"), { type: "line",
+    data: { labels: DATA.weeks, datasets: [{ data: DATA.leads, borderColor: PRIMARY, backgroundColor: PRIMARY, borderWidth: 2,
+            pointRadius: 4, pointHoverRadius: 6, pointBorderColor: token("--surface-container-low"), pointBorderWidth: 2, tension: 0.3 }] },
+    options: base(num) });
+}
 </script>
 </body>
 </html>
